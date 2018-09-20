@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.ssh.vo">
+    <class name="User" table="user" schema="testdb">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="native"/>
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="name" not-null="true" length="10"/>
+        </property>
+        <property name="sex" type="java.lang.String">
+            <column name="sex" length="4" />
+        </property>
+        <property name="age" type="java.lang.Integer">
+            <column name="age" length="3"/>
+        </property>
+        <property name="location" type="java.lang.String">
+            <column name="location" length="30"/>
+        </property>
+        <set name="mates" inverse="true" cascade="all" lazy="false">
+            <key column="cid"/>
+            <one-to-many class="Mate"/>
+        </set>
+        <!--
+        一对一默认使用左外连接方式查询不懒加载，
+        设置constrained为true后使用select抓取方式
+        并且使用懒加载
+        -->
+        <one-to-one name="soulmate" cascade="all"/>
+    </class>
+</hibernate-mapping>
